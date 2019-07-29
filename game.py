@@ -42,7 +42,7 @@ def title_screen_selections():
 def title_screen():
   os.system('clear')    # clear command prompt
   print('############################')
-  print('# Welcome to the RPG Game! #')
+  print('#   Welcome to the game!   #')
   print('############################')
   print('          - Play -          ')
   print('          - Help -          ')
@@ -51,17 +51,13 @@ def title_screen():
 
 def help_menu():
   print('############################')
-  print('# Welcome to the RPG Game! #')
+  print('#   Welcome to the game!   #')
   print('############################')
-  print('- Use left, right, up, down to move')
-  print('- Type your commands to do them')
-  print('- Use "look" to inspect something')
+  print('- Use left, right, up, down to move.')
+  print('- Type & enter your commands to use them.')
+  print('- Use "look" to inspect something.')
   print('- Good luck and have fun!')
   title_screen_selections()
-
-## Game Functionality ##
-def start_game():
-
 
 # MAP #
 """
@@ -94,10 +90,10 @@ solved_places = {'a1': False, 'a2': False, 'a3': False, 'a4': False
 
 zonemap = {
     'a1': {
-        ZONENAME: "Watchtower",
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
+        ZONENAME: "Abandonded Watchtower",
+        DESCRIPTION = 'description',
+        EXAMINATION = 'examine',
+        SOLVED = False,
         UP = '',
         DOWN = 'b1',
         RIGHT = 'a2',
@@ -105,9 +101,9 @@ zonemap = {
     },
     'a2': {
         ZONENAME: "Beach",
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
+        DESCRIPTION = 'description',
+        EXAMINATION = 'examine',
+        SOLVED = False,
         UP = '',
         DOWN = 'b2',
         RIGHT = 'a3', 
@@ -115,9 +111,9 @@ zonemap = {
     },
     'a3': {
         ZONENAME: "Dirt Road",
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
+        DESCRIPTION = 'description',
+        EXAMINATION = 'examine',
+        SOLVED = False,
         UP = '',
         DOWN = 'b3',
         RIGHT = 'a4',
@@ -125,9 +121,9 @@ zonemap = {
     },
     'a4': {
         ZONENAME: "Cliff",
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
+        DESCRIPTION = 'description',
+        EXAMINATION = 'examine',
+        SOLVED = False,
         UP = '',
         DOWN = 'b4',
         RIGHT = '',
@@ -135,9 +131,9 @@ zonemap = {
     },
     'b1': {
         ZONENAME: "Town Market",
-        DESCRIPTION = 'description'
-        EXAMINATION = 'examine'
-        SOLVED = False
+        DESCRIPTION = 'description',
+        EXAMINATION = 'examine',
+        SOLVED = False,
         UP = 'a1', 
         DOWN = 'c1',
         RIGHT = 'b2'
@@ -153,7 +149,53 @@ zonemap = {
         RIGHT = 'b3',
         LEFT = 'b1',
     },
+    'b3': {
+        ZONENAME: 'Forester Square',
+        DESCRIPTION = 'Large town square filled with all kinds of specimens from eager salesmen to shameless politicians.',
+        EXAMINATION = 'Salesmen cry sales and offers into the air around you. You see an impassioned man at the edge of the square, speaking to a curious crowd.',
+        SOLVED = False,
+        UP = 'a2',
+        DOWN = 'c2',
+        RIGHT = 'b3',
+        LEFT = 'b1',
+    },
+    'b4': {
+        ZONENAME: 'City Gates',
+        DESCRIPTION: 'description',
+        EXAMINATION: 'examine',
+        SOLVED = False,
+        UP = 'a4',
+        DOWN = 'c4',
+        RIGHT = '',
+        LEFT = 'b3',
+    },
 
-          }
+}
+
+## Game Interactivity ##
+def print_location():
+  print('\n' + ('#' * (4 + len(myPlayer.location))))
+  print('# ' + myPlayer.location.upper() + ' #')
+  print('# ' + zonemap[myPlayer.position][DESCRIPTION] + ' #')
+  print('\n' + ('#' * (4 + len(myPlayer.location))))
+
+def prompt():
+    print('\n' + '==================================')
+    print('What would you like to do?')
+    action = input('> ')
+    acceptable_actions = ['move', 'go', 'travel', 'walk', 'quit', 'examine', 'inspect', 'interact', 'look']
+    while action.lower() not in acceptable_actions:
+      print('Unknown action, try again.\n')
+      action = input('> ')
+    if action.lower() == 'quit':
+      sys.exit()
+    elif action.lower() in ['move', 'go', 'travel', 'walk']:
+      player_move(action.lower())
+    elif action.lower() in ['examine', 'inspect', 'interact', 'look']:
+      player_examine(action.lower())
 
 
+
+
+## Game Functionality ##
+def start_game():
