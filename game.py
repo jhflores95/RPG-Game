@@ -14,10 +14,12 @@ screen_width = 100
 class player:
   def __init__(self):
     self.name = ''
+    self.job = ''
     self.hp = 0
     self.mp = 0
     self.status_effects = []
     self.location = 'start'
+    self.game_over = False
 myPlayer = player()
 
 ## Title Screen ##
@@ -176,7 +178,7 @@ zonemap = {
 def print_location():
   print('\n' + ('#' * (4 + len(myPlayer.location))))
   print('# ' + myPlayer.location.upper() + ' #')
-  print('# ' + zonemap[myPlayer.position][DESCRIPTION] + ' #')
+  print('# ' + zonemap[myPlayer.location][DESCRIPTION] + ' #')
   print('\n' + ('#' * (4 + len(myPlayer.location))))
 
 def prompt():
@@ -194,8 +196,51 @@ def prompt():
     elif action.lower() in ['examine', 'inspect', 'interact', 'look']:
       player_examine(action.lower())
 
+def player_move(myAction):
+  ask = 'Where would you like to move to?\n'
+  dest = input(ask)
+  if dest == in ['up', 'north']:
+    destination = zonemap[myPlayer.location][UP]
+    movement_handler(destination)
+  elif dest == in ['down', 'south']:
+    destination = zonemap[myPlayer.location][DOWN]
+    movement_handler(destination)
+  elif dest == in ['right', 'east']:
+    destination = zonemap[myPlayer.location][RIGHT]
+    movement_handler(destination)
+  elif dest == in ['left', 'west']:
+    destination = zonemap[myPlayer.location][LEFT]
+    movement_handler(destination)
 
+def movement_handler(destination):
+  print('\n' + 'You have moved ' + destination + '.')
+  myPlayer.location = destination
+  print_location()
 
+def player_examine(action):
+  if zonemap[myPlayer.location][SOLVED]:
+    print('You have already exhausted this option.')
+  else:
+    print('You can trigger a puzzle here')
 
 ## Game Functionality ##
 def start_game():
+  return
+
+def main_game_loop():
+  while myPlayer.game_over is False:
+    prompt()
+    # handle if puzzles have been solved, boss is defeated, explored everything, etc.
+
+def setup_game():
+  os.system('clear')
+
+  q1 = "Hello, what's your name?\n"
+  for character in q1:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.05)
+  player_name = input('> ')
+
+title_screen()
+
